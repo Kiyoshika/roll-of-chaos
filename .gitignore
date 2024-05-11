@@ -1,0 +1,6 @@
+# vim
+*.swo
+*.swp
+
+# executables
+dist/roll-of-chaos*
