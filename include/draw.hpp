@@ -13,6 +13,9 @@ namespace draw
     // solid line: ##############
     void solid_line(size_t width);
 
+    // draw dialog text
+    void dialog(const std::vector<std::string>& text);
+
     // option line: # [X] option text here   #
     void option(const std::string& text, size_t idx, size_t n_options, size_t menu_width);
 }; // namespace draw
