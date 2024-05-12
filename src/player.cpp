@@ -3,50 +3,13 @@
 #include "json.h"
 #include <sstream>
 
-roc::entity::Player::Player(const std::string& name)
+roc::entity::Player::Player()
 {
-    this->name = name;
-    this->save_path = roc::util::get_game_data_path() + name + ".json";
+    this->__init_skills();
 
     this->level = 1;
     this->health = 20.0;
     this->location = "Gaya Village";
-
-    this->skills = {
-        { "Agility", 0 },
-        { "Attack", 0 },
-        { "Black Magic", 0 },
-        { "Dexterity", 0 },
-        { "Enchanting", 0 },
-        { "Enhancement", 0 },
-        { "Precision", 0 },
-        { "Strength", 0 },
-        { "White Magic", 0 },
-        { "Axe Affinity", 0 },
-        { "Bow Affinity", 0 },
-        { "Mace Affinity", 0 },
-        { "Spear Affinity", 0 },
-        { "Sword Affinity", 0 },
-        { "Whip Affinity", 0 }
-    };
-
-    this->skill_descriptions = {
-        { "Agility", "Improve chances of dodging, attacking twice and using items/changing equipment without ending your turn in combat" },
-        { "Attack", "Increases critical strike chance dealing double damage" },
-        { "Black Magic", "Proficiency in offensive magic to use higher level spells" },
-        { "Dexterity", "Proficiency in dual wielding different weapons and used in other skills" },
-        { "Enchanting", "Proficiency in enchantments to apply stronger buffs to equipment" },
-        { "Enhancement", "Proficiency in sharpening weapons and reinforcing equipment providing damage and defense bonuses" },
-        { "Precision", "Improve accuracy of attacks in combat" },
-        { "Strength", "Allows use of heavier weapons such as greatswords, greatshields on other special items" },
-        { "White Magic", "Proficiency in defensive magic to use higher level spells" },
-        { "Axe Affinity", "Proficiency in axes providing damage buffs" },
-        { "Bow Affinity", "Proficiency in bows providing damage buffs" },
-        { "Mace Affinity", "Proficiency in maces providing damage buffs" },
-        { "Spear Affinity", "Proficiency in spears providing damage buffs" },
-        { "Sword Affinity", "Proficiency in swords providing damage buffs" },
-        { "Whip Affinity", "Proficiency in whips providing damage buffs" }
-    };
 }
 
 uint8_t roc::entity::Player::get_skill_level(const std::string& skill_name)
@@ -88,6 +51,7 @@ void roc::entity::Player::save_data()
     std::ofstream save(this->save_path);
 
     json::jobject save_obj;
+    save_obj["name"] = this->name;
     save_obj["level"] = this->level;
     save_obj["health"] = this->health;
     save_obj["location"] = this->location;
@@ -122,6 +86,7 @@ void roc::entity::Player::load_data(const std::string& character_path)
 
     json::jobject load_data = json::jobject::parse(json_str);
 
+    player.set_name(load_data.get("name"));
     player.set_level(std::stoul(load_data.get("level")));
     player.set_health(std::stod(load_data.get("health")));
     player.set_location(load_data.get("location"));
@@ -169,4 +134,54 @@ const std::string& roc::entity::Player::get_location()
 double roc::entity::Player::get_health()
 {
     return this->health;
+}
+
+void roc::entity::Player::__init_skills()
+{
+    this->skills = {
+        { "Agility", 0 },
+        { "Attack", 0 },
+        { "Black Magic", 0 },
+        { "Dexterity", 0 },
+        { "Enchanting", 0 },
+        { "Enhancement", 0 },
+        { "Precision", 0 },
+        { "Strength", 0 },
+        { "White Magic", 0 },
+        { "Axe Affinity", 0 },
+        { "Bow Affinity", 0 },
+        { "Mace Affinity", 0 },
+        { "Spear Affinity", 0 },
+        { "Sword Affinity", 0 },
+        { "Whip Affinity", 0 }
+    };
+
+    this->skill_descriptions = {
+        { "Agility", "Improve chances of dodging, attacking twice and using items/changing equipment without ending your turn in combat" },
+        { "Attack", "Increases critical strike chance dealing double damage" },
+        { "Black Magic", "Proficiency in offensive magic to use higher level spells" },
+        { "Dexterity", "Proficiency in dual wielding different weapons and used in other skills" },
+        { "Enchanting", "Proficiency in enchantments to apply stronger buffs to equipment" },
+        { "Enhancement", "Proficiency in sharpening weapons and reinforcing equipment providing damage and defense bonuses" },
+        { "Precision", "Improve accuracy of attacks in combat" },
+        { "Strength", "Allows use of heavier weapons such as greatswords, greatshields on other special items" },
+        { "White Magic", "Proficiency in defensive magic to use higher level spells" },
+        { "Axe Affinity", "Proficiency in axes providing damage buffs" },
+        { "Bow Affinity", "Proficiency in bows providing damage buffs" },
+        { "Mace Affinity", "Proficiency in maces providing damage buffs" },
+        { "Spear Affinity", "Proficiency in spears providing damage buffs" },
+        { "Sword Affinity", "Proficiency in swords providing damage buffs" },
+        { "Whip Affinity", "Proficiency in whips providing damage buffs" }
+    };
+}
+
+void roc::entity::Player::set_name(const std::string& name)
+{
+    this->name = name;
+    this->save_path = roc::util::get_game_data_path() + name + ".json";
+}
+
+const std::string& roc::entity::Player::get_name()
+{
+    return this->name;
 }

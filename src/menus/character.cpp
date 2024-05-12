@@ -7,7 +7,7 @@
 #include <random>
 #include <filesystem>
 
-roc::entity::Player roc::menu::character::create()
+void roc::menu::character::create(roc::entity::Player& player)
 {
     roc::draw::splash_text();
 
@@ -20,11 +20,13 @@ roc::entity::Player roc::menu::character::create()
         case 1:
             break;
         case 2:
-            return roc::menu::character::create();
-            break;
+            {
+                roc::menu::character::create(player);
+                return;
+            }
     }
 
-    roc::entity::Player player(character_name);
+    player.set_name(character_name);
 
     std::cout << "\n How would you like to roll for your stats? (you can roll multiple dice in the same skill)\n";
     choice = roc::menu::choice_menu({"1d20 in one skill", "1d8 in two skills", "1d6 in three skills", "1d4 in four skills"});
@@ -63,8 +65,6 @@ roc::entity::Player roc::menu::character::create()
     std::cout << "\n";
 
     roc::menu::choice_menu({"Play Game"});
-
-    return player;
 }
 
 void roc::menu::character::roll_for_skill(uint8_t die_faces, roc::entity::Player& player)
@@ -93,14 +93,12 @@ void roc::menu::character::roll_for_skill(uint8_t die_faces, roc::entity::Player
 
 }
 
-roc::entity::Player roc::menu::character::load()
+void roc::menu::character::load(roc::entity::Player& player)
 {
 
     std::string data_path = roc::util::get_game_data_path();
     std::vector<std::string> character_names;
     std::vector<std::string> character_paths;
-
-    roc::entity::Player player;
 
     for (const auto& entry : std::filesystem::directory_iterator(data_path))
     {
@@ -117,7 +115,10 @@ roc::entity::Player roc::menu::character::load()
         std::cout << " There are no saved characters...\n";
         uint16_t choice = roc::menu::choice_menu({"Create New Character"});
         if (choice == 1)
-            player = roc::menu::character::create();
+        {
+            roc::menu::character::create(player);
+            return;
+        }
     }
     else
     {
@@ -127,6 +128,4 @@ roc::entity::Player roc::menu::character::load()
 
         player.load_data(character_paths[choice]);
     }
-
-    return player;
 }
