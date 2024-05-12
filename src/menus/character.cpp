@@ -3,10 +3,11 @@
 #include "draw.hpp"
 #include "player.hpp"
 #include "util.hpp"
+
 #include <random>
 #include <filesystem>
 
-void roc::menu::character::create()
+roc::entity::Player roc::menu::character::create()
 {
     roc::draw::splash_text();
 
@@ -62,6 +63,8 @@ void roc::menu::character::create()
     std::cout << "\n";
 
     roc::menu::choice_menu({"Play Game"});
+
+    return player;
 }
 
 void roc::menu::character::roll_for_skill(uint8_t die_faces, roc::entity::Player& player)
@@ -90,7 +93,40 @@ void roc::menu::character::roll_for_skill(uint8_t die_faces, roc::entity::Player
 
 }
 
-void roc::menu::character::load()
+roc::entity::Player roc::menu::character::load()
 {
 
+    std::string data_path = roc::util::get_game_data_path();
+    std::vector<std::string> character_names;
+    std::vector<std::string> character_paths;
+
+    roc::entity::Player player;
+
+    for (const auto& entry : std::filesystem::directory_iterator(data_path))
+    {
+        std::string path = entry.path();
+        character_paths.push_back(path);
+
+        std::string character_name = roc::util::get_filename(path);
+        character_name.erase(character_name.find(".json"));
+        character_names.push_back(character_name);
+    }
+
+    if (character_names.size() == 0)
+    {
+        std::cout << " There are no saved characters...\n";
+        uint16_t choice = roc::menu::choice_menu({"Create New Character"});
+        if (choice == 1)
+            player = roc::menu::character::create();
+    }
+    else
+    {
+        std::cout << " Please select a character to load:\n";
+        uint16_t choice = roc::menu::choice_menu(character_names);
+        choice -= 1; // convert choice to index
+
+        player.load_data(character_paths[choice]);
+    }
+
+    return player;
 }

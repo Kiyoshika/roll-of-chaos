@@ -4,3 +4,6 @@
 
 # executables
 dist/roll-of-chaos*
+
+# mac
+*.DS_Store
