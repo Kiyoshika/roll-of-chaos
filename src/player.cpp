@@ -1,6 +1,7 @@
 #include "player.hpp"
 #include "util.hpp"
 #include "json.h"
+#include "global.hpp"
 #include <sstream>
 
 roc::entity::Player::Player()
@@ -9,6 +10,7 @@ roc::entity::Player::Player()
 
     this->level = 1;
     this->health = 20.0;
+    this->gold = 0;
     this->location = "Gaya Village";
 }
 
@@ -51,10 +53,12 @@ void roc::entity::Player::save_data()
     std::ofstream save(this->save_path);
 
     json::jobject save_obj;
+    save_obj["game_version"] = roc::global::get_game_version();
     save_obj["name"] = this->name;
     save_obj["level"] = this->level;
     save_obj["health"] = this->health;
     save_obj["location"] = this->location;
+    save_obj["gold"] = this->gold;
 
     json::jobject skills_obj;
     for (const auto& [skill, level] : this->skills)
@@ -89,6 +93,7 @@ void roc::entity::Player::load_data(const std::string& character_path)
     player.set_name(load_data.get("name"));
     player.set_level(std::stoul(load_data.get("level")));
     player.set_health(std::stod(load_data.get("health")));
+    player.set_gold(std::stoul(load_data.get("gold")));
     player.set_location(load_data.get("location"));
 
     for (const std::string& skill : player.get_skill_list())
@@ -184,4 +189,14 @@ void roc::entity::Player::set_name(const std::string& name)
 const std::string& roc::entity::Player::get_name()
 {
     return this->name;
+}
+
+void roc::entity::Player::set_gold(uint32_t gold)
+{
+    this->gold = gold;
+}
+
+uint32_t roc::entity::Player::get_gold()
+{
+    return this->gold;
 }

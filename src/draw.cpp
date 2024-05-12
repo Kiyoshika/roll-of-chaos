@@ -1,5 +1,6 @@
 #include "draw.hpp"
 #include "menus/menu.hpp"
+#include "global.hpp"
 
 void roc::draw::splash_text()
 {
@@ -15,7 +16,7 @@ void roc::draw::splash_text()
     std::cout << "    ███    ███  ▀██████▀  █████▄▄██ █████▄▄██       ▀██████▀    ███             ████████▀    ███    █▀      ███    █▀   ▀██████▀   ▄████████▀\n";
     std::cout << "    ███    ███            ▀         ▀\n";
 
-    std::cout << " version 0.1 - 11 May 2024\n\n";
+    std::cout << " version " << roc::global::get_game_version() << " - " << roc::global::get_game_version_date() << "\n\n";
 }
 
 void roc::draw::solid_line(size_t width)
@@ -34,7 +35,6 @@ void roc::draw::dialog(const std::vector<std::string>& text)
             max_text_len = line.length();
 
     size_t width = max_text_len + 4;
-    std::cout << " ";
     roc::draw::solid_line(width);
 
     for (const std::string& line : text)
@@ -43,7 +43,7 @@ void roc::draw::dialog(const std::vector<std::string>& text)
 
         size_t remaining_len = 0;
         if (line.length() + 2 < width)
-            remaining_len = width - line.length() - 2;
+            remaining_len = width - line.length() - 3;
         for (size_t i = 0; i < remaining_len; ++i)
             std::cout << " ";
         std::cout << "#\n";

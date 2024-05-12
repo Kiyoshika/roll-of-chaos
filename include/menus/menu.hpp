@@ -7,6 +7,10 @@
 
 namespace roc
 {
+
+// forward declaration
+namespace entity { class Player; };
+
 namespace menu
 {
     // "clear" the screen
@@ -22,5 +26,10 @@ namespace menu
 
     // main titlescreen of the game when launching
     uint16_t title_screen();
+
+namespace location
+{
+    void gaya_village(roc::entity::Player& player);
+}; // namespace location
 }; // namespace menu
 }; // namespace roc

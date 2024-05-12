@@ -23,11 +23,13 @@ class Player
     uint8_t get_level();
     double get_health();
     const std::string& get_location();
+    uint32_t get_gold();
 
     void set_name(const std::string& name);
     void set_level(uint8_t level);
     void set_health(double health);
     void set_location(const std::string& location);
+    void set_gold(uint32_t gold);
 
     void set_skill_level(const std::string& skill_name, uint8_t value);
     uint8_t get_skill_level(const std::string& skill_name);
@@ -44,6 +46,7 @@ class Player
     uint8_t level;
     double health;
     std::string location;
+    uint32_t gold;
 
     std::string save_path;
 
