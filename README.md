@@ -6,7 +6,7 @@ Originally planned to be a tabletop RPG but realized the mechanics involved woul
 **NOTE:** This repo is more "source available" than "open source" as I will not be taking arbitrary pull requests. But if we have a discussion and all agree it would be better for the game, I will review PRs on a case-by-case basis. However, players are more than welcome to modify the code themselves to "mod" the game however they like, change the rules and play however you want to play. This repo will just stand as the "official" ruleset.
 
 ## Introduction
-Roll of Chaos is a D&D-inspired text adventure focused on a hardcore hack-and-slash style of gameplay designed for solo players. 
+Roll of Chaos is a D&D-inspired text adventure focused on a hack-and-slash style of gameplay designed for solo players. 
 
 Create a character with basic rolled stats and traverse various zones and dungeons to gain unique items and create a wide variety of builds. 
 
@@ -17,8 +17,6 @@ Respec your stats for a fee in most towns.
 Obtain high level weapons, armor and spells from boss drops at elite versions of dungeons. 
 
 Find secret bosses around the world to obtain legendary items.
-
-**The game has permanent death, so if you die in a dungeon, you lose your character.** 
 
 It’s up to the player to make their own endgame - reach level 50? Collect every unique? Kill every boss? Clear every dungeon? Make the weirdest build possible? It’s your choice!
 
