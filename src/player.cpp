@@ -2,6 +2,7 @@
 #include "util.hpp"
 #include "json.h"
 #include "global.hpp"
+#include "location.hpp"
 #include <sstream>
 
 roc::entity::Player::Player()
@@ -11,7 +12,7 @@ roc::entity::Player::Player()
     this->level = 1;
     this->health = 20.0;
     this->gold = 0;
-    this->location = "Gaya Village";
+    this->location = roc::database::locations["Gaya Village"];
 }
 
 uint8_t roc::entity::Player::get_skill_level(const std::string& skill_name)
@@ -57,7 +58,7 @@ void roc::entity::Player::save_data()
     save_obj["name"] = this->name;
     save_obj["level"] = this->level;
     save_obj["health"] = this->health;
-    save_obj["location"] = this->location;
+    save_obj["location"] = this->location.get_name();
     save_obj["gold"] = this->gold;
 
     json::jobject skills_obj;
@@ -115,9 +116,9 @@ void roc::entity::Player::set_health(double health)
     this->health = health;
 }
 
-void roc::entity::Player::set_location(const std::string& location)
+void roc::entity::Player::set_location(const std::string& location_name)
 {
-    this->location = location;
+    this->location = roc::database::locations[location_name];
 }
 
 void roc::entity::Player::set_skill_level(const std::string& skill_name, uint8_t value)
@@ -131,9 +132,14 @@ uint8_t roc::entity::Player::get_level()
     return this->level;
 }
 
-const std::string& roc::entity::Player::get_location()
+const roc::Location& roc::entity::Player::get_location() const
 {
     return this->location;
+}
+
+const std::string& roc::entity::Player::get_location_name()
+{
+    return this->location.get_name();
 }
 
 double roc::entity::Player::get_health()

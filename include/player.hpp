@@ -7,6 +7,8 @@
 #include <utility>
 #include <fstream>
 
+#include "location.hpp"
+
 namespace roc
 {
 namespace entity
@@ -22,14 +24,16 @@ class Player
     const std::string& get_name();
     uint8_t get_level();
     double get_health();
-    const std::string& get_location();
     uint32_t get_gold();
+
+    const roc::Location& get_location() const;
+    const std::string& get_location_name();
 
     void set_name(const std::string& name);
     void set_level(uint8_t level);
     void set_health(double health);
-    void set_location(const std::string& location);
     void set_gold(uint32_t gold);
+    void set_location(const std::string& location_name);
 
     void set_skill_level(const std::string& skill_name, uint8_t value);
     uint8_t get_skill_level(const std::string& skill_name);
@@ -45,7 +49,7 @@ class Player
     std::string name;
     uint8_t level;
     double health;
-    std::string location;
+    roc::Location location;
     uint32_t gold;
 
     std::string save_path;
