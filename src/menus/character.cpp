@@ -129,3 +129,22 @@ void roc::menu::character::load(roc::entity::Player& player)
         player.load_data(character_paths[choice]);
     }
 }
+
+void roc::menu::character::sheet(roc::entity::Player& player)
+{
+    roc::menu::clear_screen();
+
+    roc::draw::dialog({"Attributes:"});
+    roc::draw::dialog({
+        "Level: " + std::to_string(player.get_level()),
+        "Health: " + std::to_string(player.get_health())
+    });
+
+    std::cout << "\n";
+
+    roc::draw::dialog({"Skills:"});
+
+    std::cout << "\n";
+
+    uint16_t choice = roc::menu::choice_menu({"View Inventory", "Back"});
+}

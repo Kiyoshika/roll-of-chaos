@@ -17,6 +17,9 @@ namespace character
 
     // load character
     void load(roc::entity::Player& player);
+
+    // character sheet
+    void sheet(roc::entity::Player& player);
 }; // namespace character
 }; // namespace menu
 }; // namespace roc

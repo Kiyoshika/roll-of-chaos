@@ -14,5 +14,12 @@ void roc::menu::main(roc::entity::Player& player)
 
     std::cout << "\n";
 
-    uint16_t choice = roc::menu::choice_menu(player.get_location().get_menu_options());
+    auto menu_options = player.get_location().get_menu_options();
+
+    std::vector<std::string> option_names;
+    for (const auto& option : menu_options)
+        option_names.push_back(option.first);
+
+    uint16_t choice = roc::menu::choice_menu(option_names);
+    menu_options[choice - 1].second(player);
 }
